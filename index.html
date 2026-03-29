@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="icon" type="image/png" href="asset/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Minecraft Commands Hub | موسوعة أوامر ماينكرافت</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(145deg, #1a3a1a 0%, #0e2a0e 100%);
+            color: #f0f0e0;
+            line-height: 1.6;
+        }
+
+        /* شريط التنقل */
+        .navbar {
+            background: #0a1f0a;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 3px solid #5a7c3c;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8bc34a, #cddc39);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo i {
+            background: none;
+            color: #8bc34a;
+            margin-left: 8px;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 10px;
+            background: #2c4a2c;
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            transition: 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .lang-btn.active-lang {
+            background: #8bc34a;
+            color: #0a1f0a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: 0.2s;
+            border-radius: 30px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .nav-links button.active, .nav-links button:hover {
+            background: #5a7c3c;
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .content-card {
+            background: rgba(20, 35, 20, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            border: 1px solid #5a7c3c;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #cddc39;
+            border-right: 6px solid #8bc34a;
+            padding-right: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 1.5rem 0 1rem;
+            color: #cddc39;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 1rem 0;
+            color: #a5d6a5;
+        }
+
+        .command-card {
+            background: #0f1f0f;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 5px solid #8bc34a;
+            transition: 0.2s;
+        }
+
+        .command-code {
+            font-family: 'Courier New', monospace;
+            background: #2a3a2a;
+            padding: 0.5rem;
+            border-radius: 0.8rem;
+            color: #ffd966;
+            font-size: 1.1rem;
+            direction: ltr;
+            text-align: left;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: #5a7c3c;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: #8bc34a;
+            color: #0a1f0a;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 2rem;
+            border: none;
+            background: #2c4a2c;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .grid-commands {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0a1f0a;
+            color: #94a3b8;
+            margin-top: 3rem;
+            border-top: 1px solid #5a7c3c;
+        }
+
+        @media (max-width: 800px) {
+            .navbar {
+                flex-direction: column;
+            }
+            .grid-commands {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge {
+            background: #5a7c3c;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        [data-lang="en"] .arabic-text {
+            display: none;
+        }
+        [data-lang="ar"] .english-text {
+            display: none;
+        }
+
+        .creator-info {
+            background: #0a1f0a;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body data-lang="ar">
+<div class="navbar">
+    <div class="logo">
+        <i class="fas fa-cube"></i> <i class="fas fa-terminal"></i> Commands<span style="color:#8bc34a;">Hub</span>
+    </div>
+    <div class="lang-switch">
+        <button class="lang-btn active-lang" data-lang-switch="ar">🇸🇪 العربية</button>
+        <button class="lang-btn" data-lang-switch="en">🇬🇧 English</button>
+    </div>
+    <div class="nav-links">
+        <button class="nav-btn active" data-tab="chat">💬 أوامر الشات</button>
+        <button class="nav-btn" data-tab="commandblock">🔲 كتلة الأوامر</button>
+        <button class="nav-btn" data-tab="examples">⚙️ أمثلة متقدمة</button>
+        <button class="nav-btn" data-tab="creator">👨‍💻 المبدع</button>
+    </div>
+</div>
+
+<div class="container">
+    <!-- قسم أوامر الشات -->
+    <div id="chat-tab" class="tab-content">
+        <div class="content-card">
+            <div class="icon-title"><i class="fas fa-comment-dots" style="font-size:2rem;color:#8bc34a;"></i><h1><span class="arabic-text">📜 جميع أوامر الشات (Chat Commands)</span><span class="english-text">📜 All Chat Commands</span></h1></div>
+            <input type="text" id="chatSearch" class="search-box" placeholder="🔍 ابحث عن أمر... / Search for command...">
+            <div id="chatCommandsList" class="grid-commands"></div>
+        </div>
+    </div>
+
+    <!-- قسم كتلة الأوامر -->
+    <div id="commandblock-tab" class="tab-content" style="display:none;">
+        <div class="content-card">
+            <div class="icon-title"><i class="fas fa-microchip" style="font-size:2rem;color:#8bc34a;"></i><h1><span class="arabic-text">🔲 أوامر كتلة الأوامر (Command Block)</span><span class="english-text">🔲 Command Block Commands</span></h1></div>
+            <input type="text" id="cbSearch" class="search-box" placeholder="🔍 ابحث عن أمر... / Search for command...">
+            <div id="cbCommandsList" class="grid-commands"></div>
+        </div>
+    </div>
+
+    <!-- قسم أمثلة متقدمة -->
+    <div id="examples-tab" class="tab-content" style="display:none;">
+        <div class="content-card">
+            <h1><span class="arabic-text">⚙️ أمثلة عملية وتطبيقات</span><span class="english-text">⚙️ Practical Examples</span></h1>
+            <div class="command-card">
+                <h3><span class="arabic-text">🎯 نظام نقاط بسيط باستخدام كتلة الأوامر</span><span class="english-text">🎯 Simple Scoreboard System</span></h3>
+                <div class="command-code">/scoreboard objectives add kills totalKillCount</div>
+                <div class="command-code">/scoreboard players set @p kills 0</div>
+                <div class="command-code">/execute as @e[type=zombie] on death run scoreboard players add @p kills 1</div>
+                <button class="copy-btn" data-copy="/scoreboard objectives add kills totalKillCount">📋 نسخ</button>
+            </div>
+            <div class="command-card">
+                <h3><span class="arabic-text">🌟 بطل خارق (طيران + سرعة)</span><span class="english-text">🌟 Superhero Mode (Fly + Speed)</span></h3>
+                <div class="command-code">/effect give @p minecraft:levitation 10 1</div>
+                <div class="command-code">/effect give @p minecraft:speed 30 2</div>
+                <div class="command-code">/effect give @p minecraft:strength 20 1</div>
+                <button class="copy-btn" data-copy="/effect give @p minecraft:levitation 10 1">📋 نسخ</button>
+            </div>
+            <div class="command-card">
+                <h3><span class="arabic-text">🏰 إنشاء برج سحري (Fill)</span><span class="english-text">🏰 Magic Tower (Fill)</span></h3>
+                <div class="command-code">/fill ~10 ~ ~10 ~-10 ~20 ~-10 stone_bricks</div>
+                <div class="command-code">/fill ~8 ~1 ~8 ~-8 ~19 ~-8 air replace stone_bricks</div>
+                <button class="copy-btn" data-copy="/fill ~10 ~ ~10 ~-10 ~20 ~-10 stone_bricks">📋 نسخ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم المبدع -->
+    <div id="creator-tab" class="tab-content" style="display:none;">
+        <div class="content-card creator-info">
+            <i class="fas fa-laptop-code" style="font-size: 4rem; color:#8bc34a;"></i>
+            <h2 style="color:#cddc39;"><span class="arabic-text">👨‍💻 مبرمج ومصمم الموقع</span><span class="english-text">👨‍💻 Website Creator</span></h2>
+            <p><span class="arabic-text"><strong>عثمان الدريوش</strong> - مبرمج ومطور ويب متخصص في منصات التعليم والألعاب</span><span class="english-text"><strong>Othman Drioche</strong> - Web Developer specialized in Education & Gaming Platforms</span></p>
+            <p><span class="arabic-text">خبرة 1 سنوات في تطوير المواقع التعليمية والتفاعلية</span><span class="english-text">1 years experience in interactive & educational websites</span></p>
+            <p><i class="fas fa-envelope"></i> driocheotmane@gmail.com | <i class="fab fa-github"></i> github.com/driocheotmane-netizen</p>
+            <p class="badge"><span class="arabic-text">🚀 هذا الموقع يحتوي على جميع أوامر ماينكرافت الرسمية (نسخة جافا) مع أمثلة عملية لكل أمر</span><span class="english-text">🚀 This site contains all official Minecraft commands (Java Edition) with practical examples</span></p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <i class="fas fa-cube"></i> Minecraft Commands Hub | <span class="arabic-text">جميع أوامر الشات وكتلة الأوامر في مكان واحد</span><span class="english-text">All Chat & Command Block commands in one place</span>
+</footer>
+
+<script>
+    // ---------------------- قاعدة بيانات الأوامر (أكثر من 70 أمرًا) ----------------------
+    const chatCommands = [
+        { name: "/gamemode", desc_ar: "تغيير وضع اللعب", desc_en: "Change game mode" },
+        { name: "/difficulty", desc_ar: "تغيير الصعوبة", desc_en: "Change difficulty" },
+        { name: "/defaultgamemode", desc_ar: "الوضع الافتراضي", desc_en: "Default gamemode" },
+        { name: "/spawnpoint", desc_ar: "نقطة ظهور اللاعب", desc_en: "Set spawnpoint" },
+        { name: "/setworldspawn", desc_ar: "نقطة ظهور العالم", desc_en: "Set world spawn" },
+
+        { name: "/give", desc_ar: "إعطاء عنصر", desc_en: "Give item" },
+        { name: "/clear", desc_ar: "حذف الأغراض", desc_en: "Clear inventory" },
+        { name: "/item", desc_ar: "تعديل الأغراض", desc_en: "Modify items" },
+        { name: "/loot", desc_ar: "غنائم", desc_en: "Generate loot" },
+        { name: "/recipe", desc_ar: "فتح وصفات", desc_en: "Unlock recipes" },
+
+        { name: "/setblock", desc_ar: "وضع بلوك", desc_en: "Place block" },
+        { name: "/fill", desc_ar: "ملء منطقة", desc_en: "Fill area" },
+        { name: "/clone", desc_ar: "نسخ مبنى", desc_en: "Clone structure" },
+        { name: "/place", desc_ar: "وضع هيكل", desc_en: "Place structure" },
+
+        { name: "/execute", desc_ar: "تنفيذ أوامر متقدمة", desc_en: "Execute command" },
+        { name: "/data", desc_ar: "تعديل البيانات", desc_en: "Modify data" },
+        { name: "/function", desc_ar: "تشغيل دوال", desc_en: "Run function" },
+        { name: "/tag", desc_ar: "إدارة التاجات", desc_en: "Manage tags" },
+        { name: "/scoreboard", desc_ar: "لوحة النقاط", desc_en: "Scoreboard" },
+        { name: "/attribute", desc_ar: "تعديل الخصائص", desc_en: "Change attributes" },
+
+        { name: "/summon", desc_ar: "استدعاء كيان", desc_en: "Summon entity" },
+        { name: "/kill", desc_ar: "قتل كيان", desc_en: "Kill entity" },
+        { name: "/effect", desc_ar: "إعطاء تأثير", desc_en: "Apply effect" },
+        { name: "/enchant", desc_ar: "سحر الأدوات", desc_en: "Enchant items" },
+        { name: "/xp", desc_ar: "إعطاء خبرة", desc_en: "Give XP" },
+
+        { name: "/time", desc_ar: "تغيير الوقت", desc_en: "Change time" },
+        { name: "/weather", desc_ar: "تغيير الطقس", desc_en: "Change weather" },
+        { name: "/worldborder", desc_ar: "حدود العالم", desc_en: "World border" },
+        { name: "/seed", desc_ar: "عرض البذرة", desc_en: "Show seed" },
+        { name: "/locate", desc_ar: "العثور على مكان", desc_en: "Locate structure" },
+        { name: "/locatebiome", desc_ar: "العثور على بيوم", desc_en: "Locate biome" },
+
+        { name: "/say", desc_ar: "رسالة عامة", desc_en: "Broadcast message" },
+        { name: "/tell", desc_ar: "رسالة خاصة", desc_en: "Private message" },
+        { name: "/msg", desc_ar: "رسالة خاصة", desc_en: "Private message" },
+        { name: "/me", desc_ar: "رسالة فعل", desc_en: "Action message" },
+        { name: "/title", desc_ar: "عرض عنوان", desc_en: "Display title" },
+
+        { name: "/playsound", desc_ar: "تشغيل صوت", desc_en: "Play sound" },
+        { name: "/stopsound", desc_ar: "إيقاف الصوت", desc_en: "Stop sound" },
+        { name: "/particle", desc_ar: "إظهار جزيئات", desc_en: "Particles" },
+
+        { name: "/kick", desc_ar: "طرد لاعب", desc_en: "Kick player" },
+        { name: "/ban", desc_ar: "حظر لاعب", desc_en: "Ban player" },
+        { name: "/pardon", desc_ar: "فك الحظر", desc_en: "Unban player" },
+        { name: "/ban-ip", desc_ar: "حظر IP", desc_en: "Ban IP" },
+        { name: "/pardon-ip", desc_ar: "فك حظر IP", desc_en: "Unban IP" },
+        { name: "/op", desc_ar: "إعطاء صلاحيات", desc_en: "Give admin" },
+        { name: "/deop", desc_ar: "إزالة صلاحيات", desc_en: "Remove admin" },
+        { name: "/whitelist", desc_ar: "القائمة البيضاء", desc_en: "Whitelist" },
+        { name: "/list", desc_ar: "عرض اللاعبين", desc_en: "List players" },
+        { name: "/stop", desc_ar: "إيقاف السيرفر", desc_en: "Stop server" },
+        { name: "/save-all", desc_ar: "حفظ العالم", desc_en: "Save world" },
+        { name: "/save-on", desc_ar: "تشغيل الحفظ", desc_en: "Enable saving" },
+        { name: "/save-off", desc_ar: "إيقاف الحفظ", desc_en: "Disable saving" },
+
+        { name: "/help", desc_ar: "مساعدة", desc_en: "Help" },
+        { name: "/reload", desc_ar: "إعادة تحميل", desc_en: "Reload datapacks" },
+        { name: "/debug", desc_ar: "تصحيح", desc_en: "Debug" },
+
+        { name: "/team", desc_ar: "إدارة الفرق", desc_en: "Teams" },
+        { name: "/bossbar", desc_ar: "شريط الزعيم", desc_en: "Bossbar" },
+        { name: "/advancement", desc_ar: "إنجازات", desc_en: "Advancements" },
+        { name: "/gamerule", desc_ar: "قواعد اللعبة", desc_en: "Game rules" },
+
+        { name: "/trigger", desc_ar: "تشغيل نظام", desc_en: "Trigger" },
+        { name: "/ride", desc_ar: "ركوب", desc_en: "Ride entity" },
+        { name: "/spectate", desc_ar: "مشاهدة", desc_en: "Spectate" },
+        { name: "/spreadplayers", desc_ar: "توزيع اللاعبين", desc_en: "Spread players" },
+        { name: "/schedule", desc_ar: "جدولة", desc_en: "Schedule" },
+        { name: "/forceload", desc_ar: "تحميل chunks", desc_en: "Force load" },
+        { name: "/perf", desc_ar: "أداء", desc_en: "Performance" },
+        { name: "/jfr", desc_ar: "Java recorder", desc_en: "JFR" },
+        { name: "/publish", desc_ar: "فتح LAN", desc_en: "Publish LAN" },
+        { name: "/transfer", desc_ar: "نقل لاعب", desc_en: "Transfer" },
+        { name: "/damage", desc_ar: "إلحاق ضرر", desc_en: "Damage" },
+        { name: "/random", desc_ar: "عشوائي", desc_en: "Random" },
+        { name: "/tick", desc_ar: "التحكم في الوقت", desc_en: "Tick control" }
+    ];
+    
+
+    const cbCommands = [
+        { name: "/give @p command_block", desc_ar: "الحصول على كتلة الأوامر", desc_en: "Get command block" },
+        { name: "/say Welcome to the map!", desc_ar: "رسالة ترحيب", desc_en: "Welcome message" },
+        { name: "/tp @p 100 64 100", desc_ar: "نقل اللاعب", desc_en: "Teleport player" },
+        { name: "/give @p diamond_sword 1", desc_ar: "إعطاء سيف", desc_en: "Give sword" },
+        { name: "/effect give @p speed 5 1 true", desc_ar: "سرعة", desc_en: "Speed effect" },
+        { name: "/kill @e[type=zombie]", desc_ar: "قتل الزومبي", desc_en: "Kill zombies" },
+        { name: "/execute as @a at @s if block ~ ~-1 ~ diamond_block run say You are on diamond!", desc_ar: "كشف بلوك", desc_en: "Detect block" },
+        { name: "/scoreboard objectives add timer dummy", desc_ar: "مؤقت", desc_en: "Timer system" },
+        { name: "/scoreboard players add @a timer 1", desc_ar: "زيادة المؤقت", desc_en: "Increase timer" },
+        { name: "/loot give @p loot minecraft:chests/simple_dungeon", desc_ar: "غنائم", desc_en: "Loot" },
+        { name: "/summon zombie ~ ~ ~", desc_ar: "استدعاء زومبي", desc_en: "Spawn zombie" },
+        { name: "/summon zombie ~ ~ ~ {CustomName:\"Boss\"}", desc_ar: "Boss", desc_en: "Boss entity" },
+        { name: "/title @a title {\"text\":\"Welcome\",\"color\":\"gold\"}", desc_ar: "عنوان", desc_en: "Title" },
+        { name: "/playsound minecraft:entity.experience_orb.pickup master @a", desc_ar: "صوت", desc_en: "Sound" },
+        { name: "/particle minecraft:flame ~ ~1 ~ 0 0 0 0.1 10", desc_ar: "جزيئات", desc_en: "Particles" },
+        { name: "/setblock 100 64 100 air", desc_ar: "باب تلقائي", desc_en: "Door system" },
+        { name: "/clone 0 60 0 10 70 10 20 60 20", desc_ar: "نسخ", desc_en: "Clone" },
+        { name: "/fill 0 60 0 10 70 10 stone", desc_ar: "ملء", desc_en: "Fill" },
+        { name: "/gamerule doDaylightCycle false", desc_ar: "تجميد الوقت", desc_en: "Freeze time" },
+        { name: "/execute as @a run effect give @s regeneration 1 1 true", desc_ar: "تأثير مستمر", desc_en: "Loop effect" }
+    ];
+
+    // عرض الأوامر
+    function renderCommands(commands, containerId, searchId) {
+        const container = document.getElementById(containerId);
+        const searchInput = document.getElementById(searchId);
+        function filterAndRender() {
+            const term = searchInput.value.toLowerCase();
+            const filtered = commands.filter(cmd => cmd.name.toLowerCase().includes(term) || cmd.desc_ar.includes(term) || cmd.desc_en.toLowerCase().includes(term));
+            container.innerHTML = filtered.map(cmd => `
+                <div class="command-card">
+                    <div class="command-code">${cmd.name}</div>
+                    <p><span class="arabic-text">📘 ${cmd.desc_ar}</span><span class="english-text">📘 ${cmd.desc_en}</span></p>
+                    <button class="copy-btn" data-copy="${cmd.name}">📋 <span class="arabic-text">نسخ الأمر</span><span class="english-text">Copy command</span></button>
+                </div>
+            `).join('');
+            attachCopyEvents();
+        }
+        searchInput.addEventListener('input', filterAndRender);
+        filterAndRender();
+    }
+
+    function attachCopyEvents() {
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.removeEventListener('click', copyHandler);
+            btn.addEventListener('click', copyHandler);
+        });
+    }
+
+    function copyHandler(e) {
+        const text = e.currentTarget.getAttribute('data-copy');
+        navigator.clipboard.writeText(text);
+        alert(`📋 تم نسخ: ${text}`);
+    }
+
+    // تبديل الأقسام
+    const tabs = {
+        chat: document.getElementById('chat-tab'),
+        commandblock: document.getElementById('commandblock-tab'),
+        examples: document.getElementById('examples-tab'),
+        creator: document.getElementById('creator-tab')
+    };
+    const navBtns = document.querySelectorAll('.nav-btn');
+    function switchTab(tabId) {
+        Object.keys(tabs).forEach(key => tabs[key].style.display = 'none');
+        tabs[tabId].style.display = 'block';
+        navBtns.forEach(btn => {
+            if(btn.getAttribute('data-tab') === tabId) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+    }
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
+    });
+
+    // تبديل اللغة
+    const root = document.body;
+    const langBtns = document.querySelectorAll('[data-lang-switch]');
+    function setLanguage(lang) {
+        root.setAttribute('data-lang', lang);
+        langBtns.forEach(btn => {
+            if(btn.getAttribute('data-lang-switch') === lang) btn.classList.add('active-lang');
+            else btn.classList.remove('active-lang');
+        });
+    }
+    langBtns.forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang-switch')));
+    });
+
+    // تحميل الأوامر
+    renderCommands(chatCommands, 'chatCommandsList', 'chatSearch');
+    renderCommands(cbCommands, 'cbCommandsList', 'cbSearch');
+    switchTab('chat');
+    setLanguage('ar');
+    attachCopyEvents();
+</script>
+</body>
+</html>
